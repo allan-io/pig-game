@@ -7,9 +7,6 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// keep track of what player is active start with player 1
-// current player rolls dice if not 1 dice value gets added to current score if one current score goes to zero switch player
-// hold button adds current score to total score, checks if total score is >= 100, if so game over visual cues like color and state is not active, if not switches user current score back to zero
 // game has two states, active/ not active
 // new game button resets game to original state
 
@@ -24,25 +21,23 @@ let gameActive = true;
 diceEl.classList.add('hidden');
 
 const changePlayer = function () {
+  document.querySelector('#current--' + currentPlayer).textContent = 0;
   currentPlayer === 0 ? (currentPlayer = 1) : (currentPlayer = 0);
 
-  //   switch color to other player TODO
   document.querySelector('.player--0').classList.toggle('player--active');
   document.querySelector('.player--1').classList.toggle('player--active');
 
-  // zero tempScore TODO
   tempScore = 0;
 };
 
 btnRoll.addEventListener('click', function () {
-  // 1. generate random dice number
   const randNum = Math.trunc(Math.random() * 6) + 1;
-  // 2. display dice
   diceEl.src = `dice-${randNum}.png`;
   diceEl.classList.remove('hidden');
-  // add randNum to tempScore TODO
   tempScore += randNum;
-  // 3. check if rolled 1, if true switch player
+  const currentScore = document.querySelector('#current--' + currentPlayer);
+  currentScore.textContent = tempScore;
+  console.log(currentScore);
   if (randNum === 1) {
     changePlayer();
   }
@@ -51,9 +46,25 @@ btnRoll.addEventListener('click', function () {
 // hold button TODO
 btnHold.addEventListener('click', function () {
   totalScore[currentPlayer] += tempScore;
+  currentPlayer === 0
+    ? (score0El.textContent = totalScore[0])
+    : (score1El.textContent = totalScore[1]);
+  // add class, change state of game to inactive TODO
+  if (totalScore[currentPlayer] >= 100) {
+    diceEl.classList.add('hidden');
+    document
+      .querySelector('.player--' + currentPlayer)
+      .classList.add('player--winner');
+  }
   changePlayer();
 });
 
-// change playerTODO
+// new GAme button TODO
 
-// add current score to total score TODO
+// remove game winning styles
+
+// player one current player
+
+// current calue to 0
+
+// total values both to [0,0]
