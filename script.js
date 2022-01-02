@@ -8,12 +8,11 @@ const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
 // game has two states, active/ not active
-// new game button resets game to original state
 
 score0El.textContent = 0;
 score1El.textContent = 0;
 
-const totalScore = [0, 0];
+let totalScore = [0, 0];
 let tempScore = 0;
 let currentPlayer = 0;
 let gameActive = true;
@@ -37,7 +36,6 @@ btnRoll.addEventListener('click', function () {
   tempScore += randNum;
   const currentScore = document.querySelector('#current--' + currentPlayer);
   currentScore.textContent = tempScore;
-  console.log(currentScore);
   if (randNum === 1) {
     changePlayer();
   }
@@ -59,12 +57,20 @@ btnHold.addEventListener('click', function () {
   changePlayer();
 });
 
-// new GAme button TODO
-
-// remove game winning styles
-
-// player one current player
-
-// current calue to 0
-
-// total values both to [0,0]
+btnNew.addEventListener('click', function () {
+  diceEl.classList.remove('hidden');
+  changePlayer();
+  document.querySelector('.player--0').classList.add('player--active');
+  document.querySelector('.player--1').classList.remove('player--active');
+  diceEl.classList.add('hidden');
+  document
+    .querySelector('.player--' + currentPlayer)
+    .classList.remove('player--winner');
+  currentPlayer = 0;
+  totalScore = [0, 0];
+  tempScore = 0;
+  document.querySelector('#current--0').textContent = 0;
+  document.querySelector('#current--1').textContent = 0;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+});
